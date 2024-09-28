@@ -1,0 +1,446 @@
+\documentclass{amsart}
+
+\usepackage{notes}
+
+\title{Student Arithmetic Geometry on the Birational Geometry of Stacks}
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+	These are my notes from the Fall 2024 student arithmetic geometry seminar.
+	This is a papers seminar focused on birational geometry and stacks.
+	I make no promises about the quality of the notes, but feel free to bring to my attention anything that could be improved.
+\end{abstract}
+
+\maketitle
+
+\section{8/30 (Martin Olsson) -- ???}
+
+I missed this day.
+If you have notes you would like to share, please send them to me and I will \TeX\, them up.
+(Alternatively, feel free to do so yourself and submit a pull request!)
+
+\section{9/6 (Martin Olsson) -- Algebraic Stacks through Examples}
+
+Our goal this time is to give a more precise discussion of stacks.
+Throughout we fix a base scheme $S$.
+
+\subsection{Working definition of algebraic stacks}
+
+
+\begin{dfn}
+	An \emph{algebraic stack} is a functor $\Xfr: (\Sch / S)\op \to \Grpd$ such that:
+	\begin{enumerate}
+		\item $\Xfr$ is a sheaf for the \'etale topology (i.e.\ satisfies descent),
+		\item the diagonal $\Delta_\Xfr$ is representable, and 
+		\item $\Xfr$ admits a smooth cover by a scheme.
+	\end{enumerate}
+\end{dfn}
+
+Making this precise takes some work -- it is often technically easier to work with groupoids rather than fibered categories.
+The first condition gives the notion of a \emph{stack} -- algebraicity corresponds to the second and third conditions.
+
+\begin{ex}
+	Let $U$ be a scheme over $S$ and let $G$ be a flat affine $S$-group scheme.
+	Then we can construct a quotient stack $[U/G]$, defined below.
+\end{ex}
+
+\subsection{Principal homogeneous spaces and torsors}
+
+Let $G$ be an affine group scheme over $S$.
+
+\begin{dfn}
+	A \emph{principal homogeneous space} under $G$ is a flat surjective $S$-scheme $P$ with left $G$-action such that the map 
+	\begin{align*}
+		G \times_S P &\to P \times_S P \\
+		(g, x) &\mapsto (gx, x)
+	\end{align*}
+	is an isomorphism.
+\end{dfn}
+
+\begin{ex}
+	There is an equivalence between the groupoid of invertible sheaves on $S$ and the groupoid of $\GG_m$-principal homogeneous spaces on $S$.
+	Given a line bundle $\Lc$, the corresponding homogeneous space is $\Isom(\Lc, \Oc) = \Spec_S \oplus_{n \in \ZZ} \Lc^{\otimes n}$.
+	Here $u \in \GG_m$ acts on $\oplus_n \Lc^{\otimes n}$ via $u \cdot \ell^{\otimes n} = u^n \ell^{\otimes n}$.
+\end{ex}
+
+Let $\Xfr = [U / G]$.
+Then $\Xfr(T)$ is defined to be the groupoid of commutative diagrams
+\[
+	\begin{tikzcd}
+		P \rar["\rho"] \dar & U \dar \\
+		T \rar & S
+	\end{tikzcd}
+\]
+where $P \to T$ is a principal $G$-homogeneous space and $\rho$ is $G$-equivariant.
+This is an algebraic stack!
+
+Descent follows from faithfully flat descent for affine schemes.
+For the second and third conditions, let $(P, \rho), (P', \rho') \in \Xfr(T)$.
+Define $\Isom_{\Xfr}((P, \rho), (P', \rho')): (\Sch_{/T})\op \to \Set$ by 
+\[
+	\Isom_{\Xfr}((P, \rho), (P', \rho'))(V) = \left\{ \sigma: P_V \to P'_V \big| \sigma \textrm{ is an isomorphism over $V$ and } \rho' \circ \sigma = \rho \right\}.
+\]
+The second condition is saying that $\Isom_{\Xfr}((P, \rho), (P', \rho'))$ is representable by a scheme.
+If $G$ is smooth, then the third statement is saying that for the universal homogeneous space $(P_0, \rho_0) \in \Xfr(U)$, if we are given $(P, \rho)$ on $T$, then the map $\Isom_{\Xfr}((P_0, \rho_0), (P, \rho)) \to T$ is a smooth surjection.
+
+\begin{ex}
+	Consider the case $U = S$ and $G = \GG_m$.
+	Here a principal $\GG_m$-homogeneous space $P$ corresponds to a line bundle $\Lc$.
+	We have $\Isom_T(P, P') \simeq \Isom_T(\Lc', \Lc) \simeq \Isom_T(\Lc' \otimes \Lc^\vee, \Oc)$.
+	This is representable.
+\end{ex}
+
+\begin{ex}
+	Let $k$ be a field of characteristic $p$, and let $G = \mu_p$.
+	Note that $\mu_p$ is flat but not smooth.
+	Write $B\mu_p = [\Spec k / \mu_p]$.
+	From the short exact sequence
+	\[
+		\SES{\mu_p}{\GG_m}{\GG_m}
+	\]
+	we see that the groupoid of $\mu_p$-principal homogeneous spaces on a test scheme $T$ is equivalent to the category of pairs $(\Lc, \lambda)$ where $\lambda: \Lc^{\otimes p} \xrightarrow{\sim} \Oc$.
+	Specifically, the principal homogeneous space corresponding to $(\Lc, \lambda)$ is $\Spec_T \oplus_{i=0}^{p-1} \Lc^{\otimes i}$.
+	It follows that $B \mu_p \simeq [\GG_m /_p \GG_m]$, where the $/_p$ indicates $\GG_m$ acting on itself via the $p$th power map.
+	We have taken a ``flat algebraic stack'' and replaced it by a genuine (smooth) algebraic stack!
+	A theorem of Artin allows us to do this more generally.
+\end{ex}
+
+\begin{ex}
+	Let $\Xfr$ be a ``stacky $\PP^1$'' with stabilizer $\mu_2$ at $z = 0$ and $\mu_3$ at $z = \infty$.
+	We may construct this as a stack over $\PP^1$ with $T$-points (for $g: T \to \PP^1$)
+	\[
+		\Xfr(T) = \{ (\Lc_0, \alpha_0: \Lc_0 \to \Oc_T, \lambda_0: \Lc_0^{\otimes 2} \xrightarrow{\sim} g^* \Ic_0, \textrm{ likewise at $\infty$}) \,|\, \textrm{relevant diagrams commute}\}.
+	\]
+	Here the diagram for $0$ asserts that $\alpha_0^2$ equals the composite of $\lambda_0$ and the inclusion $g^* \Ic_0 \hookrightarrow \Oc_T$.
+	The diagram for $\infty$ is similar but involves $\alpha_\infty^3$.
+
+	This is not obviously a quotient stack $[U / G]$.
+	In fact, it is impossible to write $\Xfr = [U / G]$ for a finite discrete group $G$: away from $0$ and $\infty$, the map $U \to \Xfr$ would be a finite \'etale cover, which would have to be an $n$-fold multiplication map $\GG_m \to \GG_m$ for some $n$.
+	But there's no possible choice of $n$ that works (we have a two-fold cover at $0$ and a three-fold cover at $\infty$).
+
+	However, we can realize $\Xfr = [(\AA^2 \setminus (0, 0)) / \GG_m]$ as a weighted projective space (where $\GG_m$ acts on the first coordinate by weight two and on the third coordinate by weight three).
+\end{ex}
+
+\section{9/13 (Martin Olsson) -- More Examples}
+
+\subsection{Stacky projective lines}
+
+We begin with the example from last time.
+
+\begin{ex}
+	Consider again the stacky projective line $\Xfr$ with notation as above.
+	One thinks of $\Lc_0$ as a ``square root'' of the ideal sheaf $\Ic_0$ and $\Lc_\infty$ as a ``square root'' of $\Ic_\infty$.
+	Away from the points $\{0, \infty\}$, $\Xfr$ looks like $\PP^1$.
+	The fiber of $\Xfr$ over $0 \in \PP^1$ is $(\Spec k[\epsilon] / (\epsilon^2)) / \mu_2$, where $\mu_2$ acts by $\epsilon \mapsto -\epsilon$.
+
+	We can give multiple presentations of $\Xfr$.
+	The typical approach to do so is to ``rigidify'' $\Xfr$ by choosing additional data and then quotienting by the choice of additional data.
+	\begin{enumerate}
+		\item Let's rigidify $\Xfr$ by fixing isomorphisms $\Lc_0 \simeq \Oc$ and $\Lc_\infty \simeq \Oc$.
+			Then $\alpha_0, \alpha_\infty \in \Gamma(T, \Oc_T)$, so we may view these as functions $f_0, f_\infty$.
+			The $\lambda$'s are replaced by $\gamma_0$, $\gamma_\infty$, where $\gamma_i$ trivializes $g^* \Ic_i$.
+			We may then define a scheme $U$ over $\PP^1$ by
+			\[
+				U(T) = \{ (g: T \to \PP^1, f_0, f_\infty, \gamma_0, \gamma_\infty) \,|\, \textrm{ the necessary diagrams commute} \}.
+			\]
+			This $U$ is a scheme: we may view it explicitly as a closed subscheme of $(\PP^1 \times \AA^2) \times_{\PP^1} \Isom(\Oc, \Ic_0) \times_{\PP^1} \Isom(\Oc, \Ic_\infty)$ (cut out by the condition that the diagrams commute).
+			We have an action of $\GG_m^2$ on $U$:
+			\[
+				(u_0, u_\infty) \cdot (g, f_0, f_\infty, \gamma_0, \gamma_\infty) = (g, u_0 f_0, u_\infty f_\infty, u^2_0 \gamma_0, u_\infty^3 \gamma_\infty)
+			\]
+			Thus we may construct the quotient $[U / \GG_m^2]$.
+
+			We claim that $\Xfr \simeq [U / \GG_m^2]$.
+			In fact, the point $(g, (\Lc_0, \alpha_0), (\Lc_0, \alpha_\infty), \lambda_0, \lambda_\infty)$ corresponds to the $\GG_m^2$-torsor $\Isom(\Oc, \Lc_0) \times_T \Isom(\Oc, \Lc_\infty)$ together with its natural map to $U$.
+		\item There are other presentations!
+			This is an advantage of stacks (as opposed to just considering group actions).
+			We can write $\Xfr \simeq [(\AA^2 \setminus \{ 0 \}) / \GG_m]$ where $u \in \GG_m$ acts by $u \cdot (s, t) = (u^2 s, u^3 t)$.
+			Note that $T$-points of $[(\AA^2 \setminus \{ 0 \}) / \GG_m]$ are 
+			\[
+				\{ (\Lc, a \in H^0(T, \Lc^{\otimes 2}), b \in H^0(T, \Lc^{\otimes 3})) \,|\, \textrm{$a$, $b$ not simultaneously $0$} \}.
+			\]
+
+			To see the equivalence between this and $\Xfr$, fix an isomorphism $\Ic_0 \simeq \Ic_\infty$.
+			This forces $\Lc_0^2 \simeq \Lc_\infty^3$, and we can compute $(\Lc_0 \otimes \Lc_\infty\inv)^{\otimes 2} \simeq \Lc_\infty$ and $(\Lc_0 \otimes \Lc_\infty\inv)^{\otimes 3} \simeq \Lc_0$.
+			Letting $\Mc = \Lc_0\inv \otimes \Lc_\infty$, we see that $\alpha_0 \in \Mc^{\otimes 2}$ and $\alpha_\infty \in \Mc^{\otimes 3}$.
+			Using this gives the equivalence.
+	\end{enumerate}
+\end{ex}
+
+\subsection{Weighted projective spaces}
+
+We can generalize the latter construction.
+
+\begin{ex}
+	Let $\GG_m$ act on $\AA^{n+1}$ by $u \cdot (x_0, \dots, x_n) = (u^{\alpha_0} x_0, \dots, u^{\alpha_n} x_n)$.
+	Removing the origin gives the weighted projective stack $\PP(\alpha_0, \dots, \alpha_n) = [(\AA^{n+1} \setminus \{0\}) / \GG_m]$.
+	There are many interesting sub-examples:
+	\begin{enumerate}
+		\item $\PP^n = \PP(1, \dots, 1)$
+		\item We have $\ol{\Mfr}_{1,1} \simeq \PP(4, 6)$ (though we will not show this here).
+		\item $\PP(1, -1)$ has $T$-points 
+			\[
+				\{ (\Lc, \alpha_+ \in H^0(T, \Lc), \alpha_- \in H^0(T, \Lc\inv)) \,|\, \textrm{$a_+$, $a_-$ not simultaneously zero } \}.
+			\]
+			This is covered by $U_+$ and $U_-$ where 
+			\[
+				U_\pm(T) = \{ (\Lc, a_+, a_-) \,|\, \textrm{$a_\pm$ generates $\Lc^{\otimes \pm 1}$} \}.
+			\]
+			The intersection is $\GG_m$, and $\PP(1, -1)$ is the affine line with two origins.
+	\end{enumerate}
+\end{ex}
+
+This has some interesting applications.
+
+\begin{ex}
+	Consider the polynomial $x^2 + 29y^2 - 3z^3 \in \ZZ[x, y, z]$.
+	We might like to consider a ``projective variety'' corresponding to this, but attempting to do so runs into an obvious issue: the polynomial is not homogeneous!
+	We can obtain instead a ``weighted projective variety'' 
+	\[
+		[(\Spec \ZZ[x, y, z] / (x^2 + 29y^2 - 3z^3) \setminus \{0\}) / \GG_m] \subset \PP(3, 3, 2).
+	\]
+	This is proper over $\Spec \ZZ$.
+	See a paper of Bhargava and Poonen for more discussion of this in the context of finding rational points on curves.
+	A classic result of Darmon and Granville shows that this fails local-to-global (rational points exist locally but not globally).
+\end{ex}
+
+\section{9/20 (Rose Lopez) -- Birational Geometry of Stacks}
+
+References for today's talk are:
+\begin{itemize}
+	\item Kresch and Tschinkel (2023) -- \textit{Birational Geometry of Deligne-Mumford Stacks}
+	\item Kresch and Tschinkel (2019) -- \textit{Birational Types of Algebraic Orbifolds}
+	\item Kontsevich and Tschinkel (2017) -- \textit{Specialization of Birational Types}
+	\item Bergh and Rydh (2019) -- \textit{Functorial Destackification}
+\end{itemize}
+
+\subsection{Classical Birational Geometry}
+
+\begin{dfn}
+	Let $X$ and $Y$ be varieties.
+	A \emph{rational map} $f: X \dashrightarrow Y$ is a morphism $f: U \to Y$ for some dense open $U \subset X$.
+	We identify two such maps $f: U \to Y$, $f': U' \to Y$ if $f|_{U \cap U'} = f'|_{U \cap U'}$.
+
+	We say that $f: X \dashrightarrow Y$ is \emph{birational} if there exists an inverse map $Y \dashrightarrow X$.
+	This induces an isomorphism on dense opens ($U \xrightarrow{\sim} V$) as well as an isomorphism on function fields.
+\end{dfn}
+
+\begin{thm}[Weak Factorization]
+	Let $f: X \to Y$ be a birational map between smooth complete varieties over an algebraically closed field $k$ of characteristic zero.
+	Let $U \subset X$ be an open such that $f|_U$ is an isomorphism onto its image.
+	Then $f$ factors as a zigzag of blowups at smooth centers inducing isomorphisms on the image of $U$ (??).
+\end{thm}
+
+\subsection{The Burnside Ring}
+
+Fix an algebraically closed field $k$ of characteristic zero.
+
+\begin{dfn}
+	Let $\Burn_n$ be the free abelian group generated by isomorphism classes of finitely generated fields of transcendence degree $n$. 
+	For a smooth projective irreducible variety $X$ of dimension $n$, we define $[X] := [k(X)] \subset \Burn_n$.
+	The \emph{Burnside ring of varieties} is $\Burn = \oplus_n \Burn_n$ with ring structure given by $[X] \cdot [Y] = [X \times Y]$.
+\end{dfn}
+
+For $U = X \setminus D$ where $D = D_1 \cup \dots D_\ell$ is a simple normal crossing divisor, we define
+\[
+	[U] := [X] - \sum_i [D_i \times \PP^1] + \sum_{i < j} [(D_i \cap D_j) \times \PP^2]
+\]
+We also let $[X \cup Y] = [X] + [Y]$.
+Note that $[U] = [U']$ if there exists a quasiprojective variety $V$ and a pair of birational projective morphisms $V \to U$ and $V \to U'$.
+
+\begin{prop}
+	The group $\Burn_n$ is generated by classes $[U]$ where $U$ is $n$-dimensional and quasiprojective, modulo the \emph{modified scissor relation}
+	\[
+		[U] = [V \times \PP^{r-d}] + [U \setminus V]
+	\]
+	for any smooth closed $V \subset U$ of dimension $< n$.
+\end{prop}
+
+\begin{prop}[Specialization]
+	Let $\pi: X \to B$ and $\pi': X' \to B$ be smooth proper morphisms to a smooth connected curve $B$.
+	If the generic fibers of $\pi$ and $\pi'$ are birational over $k(B)$, then for any closed $b \in B$, the fibers $\pi\inv(b)$ and $(\pi')\inv(b)$ are birational over $k(b)$.
+\end{prop}
+
+\subsection{Extension to stacks}
+
+\begin{dfn}
+	Let $\Xfr$ and $\Yfr$ be stacks.
+	A rational map $f: \Xfr \dashrightarrow \Yfr$ is a morphism defined on a dense open $\Ufr \subset \Xfr$.
+	A 2-isomorphism $\alpha: (U, f) \to (U', f')$ is an isomorphism $f|_{U \cap U'} \xrightarrow{\sim} f'|_{U \cap U'}$.
+	We say that $f$ is birational if it induces an equivalence on dense opens.
+\end{dfn}
+
+\begin{dfn}
+	Let $\Xfr$ and $\Yfr$ be stacks.
+	We say that $\Xfr$ and $\Yfr$ are \emph{birationally equivalent} if there exists a representable proper birational map $\Xfr \dashrightarrow \Yfr$, or equivalently a span $\Xfr \leftarrow \Xfr' \rightarrow \Yfr$ consisting of representable proper birational morphisms.
+\end{dfn}
+
+\begin{ex}
+	Let $\Xfr$ be a stack and $\Zfr$ a closed substack.
+	We can define a \emph{blowup} $\Bl_\Zfr \Xfr \to \Xfr$ by performing the usual scheme-theoretic blowup locally and gluing.
+\end{ex}
+
+\begin{ex}
+	Let $\Xfr$ be a smooth separated DM stack and $\Dfr \subset \Xfr$ a divisor.
+	We can define a \emph{root stack} $\sqrt[r]{(\Xfr, \Dfr)} \to \Xfr$ by
+	\[
+		\sqrt[r]{(\Xfr, \Dfr)}(T) = \big\{ (g: T \to \Xfr, \alpha: \Lc \to \Oc_T, \lambda: \Lc^{\otimes r} \xrightarrow{\sim} g^* \Ic_{\Dfr} ) \,\big|\, \textrm{the induced maps $\Lc^{\otimes r} \to \Oc_T$ agree}\big\}
+	\]
+	The morphism $\sqrt[r]{(\Xfr, \Dfr)} \to \Xfr$ is proper but not representable: the fibers over points in $\Dfr$ are stacky.
+\end{ex}
+
+\begin{ex}
+	Let $\Xfr$ be a stack and $\Lc$ a line bundle on $\Xfr$.
+	The \emph{gerbe of $n$th roots of $\Lc$} is $\sqrt[n]{\Lc / \Xfr} \to \Xfr$ with
+	\[
+		\sqrt[n]{\Lc / \Xfr}(T) = \big\{ (g: T \to \Xfr, \Mc \in \Pic T, \epsilon: \Mc^{\otimes n} \xrightarrow{\sim} g^* \Lc) \big\}
+	\]
+	We can contrast this with the above example: essentially, the above example rigidifies things by considering $\Ic_\Dfr \to \Oc$.
+	Over $\Ufr = \Xfr \setminus \Dfr$, the gerbe $\sqrt[n]{\Lc / \Xfr}|_{\Ufr}$ is trivializable.
+\end{ex}
+
+There are two weak factorization results for stacks.
+One factorizes a representable proper birational map into blowups and can be used to define the ``correct'' (?) Burnside ring.
+Another factorizes a proper birational map into stacky blowups and can be used to define a weaker Burnside ring related to ``$G$-equivariant Burnside rings.''
+
+\begin{ex}
+	Let $C = \AA^1$, $C_0 = \AA^1 \setminus \{0\}$, $E$ an elliptic curve, and $p \in E$.
+	Define $\Xfr_0 = C_0 \times E \times B(\ZZ / 2) \subset \Xfr_1 = C \times E \times B(\ZZ / 2)$.
+	Let $B = \Bl_{(0,p)} (C \times E)$ and $\Xfr_2 = \sqrt{\Oc_B(D)/B}$.
+	We get an inclusion $\Xfr_0 \to \Xfr_2$.
+	This induces an equivalence on generic fibers but not on special fibers (over $(0, p)$ ??).
+	The ``specialization'' result from earlier fails for stacks!
+\end{ex}
+
+\section{9/27 (Xiangru Zeng) -- Valuative Criteria for the Existence of Moduli Spaces}
+
+Let $k$ be an algebraically closed field of characteristic zero.
+We may skip some less-than-essential details.
+
+References are:
+\begin{itemize}
+	\item Alper -- Good Moduli Spaces for Artin Stacks
+	\item Alper, Halpern-Leistner, Heinloth -- Existence of Moduli Spaces for Algebraic Stacks
+	\item Alper -- Notes on Stacks and Moduli
+\end{itemize}
+
+\subsection{Precursors}
+
+\begin{thm}[Keel-Mori]
+	Let $\Xfr$ be a separated Deligne-Mumford stack of finite type over a base $S$.
+	Then there exists coarse moduli space $\pi: \Xfr \to X$, i.e.\ a universal algebraic space $X$ among algebraic spaces equipped with a map from $X$ and such that $\pi$ is bijective on geometric points.
+	This satisfies $\pi_* \Oc_\Xfr = \Oc_X$.
+	In characteristic zero, we end up with a ``tame moduli space:''
+	\begin{enumerate}
+		\item If $\Xfr \to S$ is flat, then $X \to \Spec k$ is flat.
+		\item The forgetful functor $\pi_*: \QCoh(\Xfr) \to \QCoh(X)$ is exact.
+	\end{enumerate}
+\end{thm}
+
+This requires $\Xfr$ to be separated -- in particular, the stabilizer groups of $\Xfr$ must be affine.
+This is a relatively strict condition!
+
+When considering problems of GIT, we often let $U \subset \PP^n$ be a projective variety with linearized $G$-action (for some linearly reductive group $G$).
+The GIT quotient is then
+\[
+	U \sslash G = \Proj \oplus_{n \geq 0} \Gamma(U, \Oc_U(n))^G.
+\]
+We have a map $\pi: [U^{ss} / G] \to U \sslash G$, where $U^{ss}$ is the semistable locus.
+This satisfies:
+\begin{enumerate}
+	\item $\Oc(U \sslash G) = \pi_*(\Oc(U^{ss}))^G$, and
+	\item (In characteristic zero) $\pi$ is affine.
+\end{enumerate}
+Seshadri called a map satisfying the above conditions a \emph{good quotient}.
+
+\subsection{Good moduli spaces}
+
+\begin{dfn}
+	A map $\pi: \Xfr \to X$, where $\Xfr$ is a (qcqs?) algebraic stack and $X$ is a (qcqs?) algebraic space, is a \emph{good moduli space} if
+	\begin{enumerate}
+		\item $\pi_* \Oc_\Xfr \cong \Oc_X$, and
+		\item $\pi_*: \QCoh(\Xfr) \to \QCoh(X)$ is exact.
+	\end{enumerate}
+\end{dfn}
+
+\begin{thm}
+	Let $\pi: \Xfr \to X$ be a good moduli space.
+	Then:
+	\begin{enumerate}
+		\item $\pi$ is surjective and universally closed.
+		\item For $x_1, x_2 \in \Xfr(k)$, then $\pi(x_1) = \pi(x_2)$ if and only if $\ol{\{x_1\}} \cap \ol{\{x_2\}} \neq \varnothing$.
+		\item If $\Xfr$ is noetherian, then $\pi$ is universal among maps from $\Xfr$ to algebraic spaces.
+	\end{enumerate}
+\end{thm}
+
+\begin{ex}
+	Let $G$ be a linearly reductive group acting on an affine scheme $\Spec A$.
+	Then $[A / G] \to \Spec A^G$ is a good moduli space.
+	In particular, $[\AA^n / \GG_m] \to \Spec k$ is a good moduli space.
+	However, if we remove the origin, then $[(\AA^n \setminus \{0\}) / \GG_m] \to \PP^{n-1}$ is a good moduli space (in fact, the map is an equivalence).
+\end{ex}
+
+In positive characteristic, the notion of a good moduli space is too restrictive.
+People consider ``adequate moduli spaces'' instead.
+We won't discuss these in detail.
+
+\subsection{Existence of good moduli spaces}
+
+\begin{thm}[Alper, Halpern-Leistner, Heinloth]
+	Let $\Xfr$ be an algebraic stack of finite type with affine diagonal.
+	Then $\Xfr$ admits a separated good moduli space if and only if
+	\begin{enumerate}
+		\item $\Xfr$ is $\Theta$-reductive, and 
+		\item $\Xfr$ is $S$-complete.
+	\end{enumerate}
+\end{thm}
+
+Let's explain what these mean.
+Let $\Theta = [\AA^1 / \GG_m]$, and for any ring $A$, we write $\Theta_A = \Theta \times_{\Spec k} \Spec A$.
+For a DVR $R$ with fraction field $K$, let $\Theta_R \setminus \{0\} = \Spec R \cup_{\Spec K} \Theta_K$.
+
+\begin{dfn}
+	Say $\Xfr$ is $\Theta$-reductive if, for all DVRs $R$ and all $\Theta_R \setminus \{0\}$, there exists a unique extension
+	\[
+		\begin{tikzcd}
+			\Theta_R \setminus \{0\} \rar \dar & \Xfr. \\ 
+			\Theta_R \ar[ur, dashed, "\exists !", swap] &
+		\end{tikzcd}
+	\]
+\end{dfn}
+
+For $S$-completeness, if $R$ is a DVR with uniformizer $\pi$, let
+\[
+	\phi_R = [\Spec R[s, t] / (st - \pi) / \GG_m]
+\]
+where $\GG_m$ acts by weight 1 on $s$ and weight $-1$ on $t$.
+
+\begin{dfn}
+	Say $\Xfr$ is $S$-complete if, for all DVRs $R$, there exists a unique extension
+	\[
+		\begin{tikzcd}
+			\phi_R \setminus \{0\} \rar \dar & \Xfr. \\
+			\phi_R \ar[ur, dashed, "\exists !", swap] &
+		\end{tikzcd}
+	\]
+\end{dfn}
+
+\begin{ex}
+	If $U = \Spec A$ is acted on by $G$, then $[U / G]$ is $\Theta$-reductive if, whenever $\lambda: \GG_m \to G$ and $\pi: \Spec R \to U$ are maps (with $R$ a DVR) such that $\lim_{t \to 0} \lambda(t) \pi(\Spec K)$ exists, then $\lim_{t \to 0} \lambda(t) \pi(\Spec R)$ also exists.
+	We can interpret $S$-completeness similarly.
+\end{ex}
+
+The theorem is proved by first using the existence of good moduli spaces for quotient stacks $\Spec A / G$
+In extending this result to more general $\Xfr$, we use the local structure theorem to write $\Xfr$ in an \'etale neighborhood of a point $x$ as $[\Spec A / G_x]$, where $G_x$ is the automorphism group of $x$.
+For gluing, we consider a diagram
+\[
+	\begin{tikzcd}
+		{[\Spec B / G_x]} \ar[r, shift right] \ar[r, shift left] \dar & {[\Spec A / G_x]} \rar \dar & \Xfr \\
+		\Spec B^{G_x} \ar[r, shift right] \ar[r, shift left] & \Spec A^{G_x} \rar & X.
+	\end{tikzcd}
+\]
+We can use Luna's fundamental theorem and ``$\Theta$-surjectivity'' to glue things.
+
+\end{document}

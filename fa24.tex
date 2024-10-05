@@ -2,7 +2,7 @@
 
 \usepackage{notes}
 
-\title{Student Arithmetic Geometry on the Birational Geometry of Stacks}
+\title{Student Arithmetic Geometry Seminar: On the Birational Geometry of Stacks}
 \date{\today}
 
 \begin{document}
@@ -27,7 +27,6 @@ Our goal this time is to give a more precise discussion of stacks.
 Throughout we fix a base scheme $S$.
 
 \subsection{Working definition of algebraic stacks}
-
 
 \begin{dfn}
 	An \emph{algebraic stack} is a functor $\Xfr: (\Sch / S)\op \to \Grpd$ such that:
@@ -442,5 +441,170 @@ For gluing, we consider a diagram
 	\end{tikzcd}
 \]
 We can use Luna's fundamental theorem and ``$\Theta$-surjectivity'' to glue things.
+
+\section{10/4 (Will Fisher) -- Smoothness of the Logarithmic Hodge Moduli Space}
+
+The reference for today is:
+\begin{itemize}
+	\item De Cataldo, Herrero, Zhang -- Geometry of the Logarithmic Hodge Moduli Space
+\end{itemize}
+
+We'll begin by reviewing this moduli space and why we should care about it.
+
+\subsection{Review of Hodge theory}
+
+If $X$ is a topological space and $\Fc$ is a sheaf of abelian groups on $X$, then we can define the sheaf cohomology $H^\bullet(X, \Fc)$ by taking an injective resolution $0 \to \Fc \to \Ic^\bullet$ and setting
+\[
+	H^k(X, \Fc) := H^k(\Gamma(X, \Ic^\bullet)).
+\]
+More generally, if $\Fc^\bullet$ is a chain complex, we define the \emph{hypercohomology} $\HH^\bullet(X, \Fc)$ by choosing a quasi-isomorphism $\Fc \xrightarrow{\sim} \Ic^\bullet$ with $\Ic^\bullet$ a complex of injectives and setting
+\[
+	\HH^k(X, \Fc^\bullet) := H^k(\Gamma(X, \Ic^\bullet)).
+\]
+
+For Hodge theory, let $X$ be a smooth projective variety over $\CC$.
+By GAGA and the $(p, q)$-form decomposition, we have
+\[
+	\HH^k(X, (\Omega_X^\bullet, d)) \cong H^k_{\dR}(X^\an, \CC).
+\]
+Formal manipulations give
+\begin{align*}
+	\HH^k(X, (\Omega_X^\bullet, 0)) &= \HH^k\big(X, \oplus_i \Omega_X^i [-i]\big) \\
+					&= \oplus_i \HH^k\big(X, \Omega_X^i [-i]\big) \\
+					&= \oplus_i \HH^{k-i}(X, \Omega_X^i) \\
+					&= \oplus_{p+q=k} \HH^q(X, \Omega_X^p).
+\end{align*}
+Thus the usual Hodge decomposition can be rewritten as
+\[
+	\HH^k(X, (\Omega_X^\bullet, d)) \cong \HH^k(X, (\Omega_X^\bullet, 0)).
+\]
+This suggests that we should think of the Hodge decomposition as a statement about \emph{sheaves} rather than as a statement just about $X$.
+Let's try to understand how to generalize this.
+
+\subsection{Non-abelian Hodge theory}
+
+Let $\Fc$ be a vector bundle on $X$ (still assumed to be a smooth complex projective variety).
+Suppose we have a connection $\nabla: \Fc \to \Fc \otimes \Omega^1_X$.
+Recall that this means $\nabla$ satisfies the Leibniz rule
+\[
+	\nabla(fs) = s \otimes df + f \nabla s
+\]
+for $f \in \Oc_X$, $s \in \Fc$.
+
+If $\nabla$ is flat, i.e. $\nabla \circ \nabla = 0$, then we get an associated complex
+\[
+	\begin{tikzcd}
+		0 \rar & \Fc \rar["\nabla"] & \Fc \otimes \Omega^1_X \rar["\nabla"] & \Fc \otimes \Omega^2_X \rar["\nabla"] & \dots
+	\end{tikzcd}
+\]
+We can (and should) view $(\Omega_X^\bullet, d)$ as the complex associated to $\Oc_X$ with the flat connection $d$.
+
+For the other side of the non-abelian Hodge theorem, we need a new definition.
+
+\begin{dfn}
+	Let $\Fc$ be a vector bundle on $X$.
+	A \emph{Higgs field} is an $\Oc_X$-linear map $\phi: \Fc \to \Fc \otimes \Omega^1_X$ satisfying $\phi \wedge \phi = 0$.
+	We call the pair $(\Fc, \phi)$ a \emph{Higgs bundle}.
+\end{dfn}
+
+The Higgs field condition can be understood locally: writing $\phi = \sum_i A_i dx_i$, we require
+\[
+	\phi \wedge \phi := \sum_{i < j} [A_i, A_j] dx_i \wedge dx_j = 0.
+\]
+
+If $(\Fc, \phi)$ is a Higgs bundle, we get a complex
+\[
+	\begin{tikzcd}
+		0 \rar & \Fc \rar["\phi"] & \Fc \otimes \Omega^1_X \rar["\phi"] & \Fc \otimes \Omega^2_X \rar["\phi"] & \dots
+	\end{tikzcd}
+\]
+In particular, $(\Omega_X^\bullet, 0)$ is the complex associated to the Higgs bundle $(\Oc_X, 0)$.
+
+\begin{rmk}
+	Arthur Ogus suggested an alternative viewpoint: we can think of the Higgs field structure as a suitable lift of $\Fc$ to the cotangent space $T^* X$.
+\end{rmk}
+
+We can now state the non-abelian Hodge theorem.
+
+\begin{thm}[Non-abelian Hodge theorem]
+	Let $X$ be a smooth projective variety over $\CC$.
+	Then (up to stability conditions) there exists a ``cohomology preserving'' correspondence between:
+	\begin{enumerate}
+		\item The moduli space $\Mflat$ of flat bundles on $X$.
+		\item The moduli space $\MHiggs$ of Higgs bundles on $X$.
+	\end{enumerate}
+	This correspondence sends $(\Oc_X, d)$ to $(\Oc_X, 0)$.
+\end{thm}
+
+The non-abelian Hodge theorem is essentially analytic.
+However, we can hope for weaker algebraic statements: perhaps we can find relationships between the corresponding moduli spaces.
+
+One result in this direction is a cohomology equivalence: $H^\bullet(\Mflat) \cong H^\bullet(\MHiggs)$.
+This can be shown by constructing a suitable geometric family interpolating between the two moduli spaces.
+
+\subsection{Construction of the interpolation}
+
+Let $X$ be a smooth scheme over a base $B$.
+
+\begin{dfn}
+	Given a vector bundle $\Fc$ on $X$ and $t \in \Gamma(B, \Oc_B)$, a \emph{$t$-connection} on $\Fc$ is an $\Oc_B$-linear map $\nabla: \Fc \to \Fc \otimes \Omega_{X/B}^1$ satisfying the $t$-twisted Leibniz rule:
+	\[
+		\nabla (fs) = ts \otimes df + f \nabla s
+	\]
+	for $f \in \Oc_X$ and $s \in \Fc$.
+	We can use the Leibniz rule to extend $\nabla$ to $\Fc$-valued $n$-forms.
+	This allows us to say that $\nabla$ is \emph{flat} if $\nabla \circ \nabla = 0$.
+\end{dfn}
+
+\begin{ex}
+	If $t = 1$, a $1$-connection is just a connection.
+\end{ex}
+
+\begin{ex}
+	If $t = 0$, the $0$-twisted Leibniz rule is $\nabla(fs) = f \nabla(s)$, so a flat $0$-connection is just a Higgs field.
+\end{ex}
+
+The general goal is to use GIT to construct a moduli space $(\MHodge)_X$ of $t$-connections on $X$ together with a smooth map 
+\begin{align*}
+	(\MHodge)_X &\to \AA^1_B \\
+	(\Fc, \nabla_t) &\mapsto t.
+\end{align*}
+
+We'll restrict our hypotheses to make this tractable.
+In particular, we assume:
+\begin{itemize}
+	\item $B$ is a noetherian scheme.
+	\item $C$ is a smooth proper scheme over $B$ with geometrically integral fibers of dimension $1$.
+	\item $D \hookrightarrow C$ is a relative Cartier divisor such that every geometric fiber over $B$ is reduced and non-empty.
+	\item The rank $n$ and degree $d$ are coprime.
+\end{itemize}
+
+We'll write $C_B$ for $C$ as a $B$-scheme and $C_S$ for a base change $C_B \times_B S$.
+
+\begin{dfn}
+	Let $(\MHodgefr)_{C_B} \to \AA^1_B$ be the moduli stack of rank $n$, degree $d$ flat $t$-connections.
+	The groupoid of $S$-points (for $S \to \AA^1_B$) consists of pairs $(\Fc, \nabla)$ where:
+	\begin{enumerate}
+		\item $\Fc$ is a vector bundle of rank $n$ on $C_S$ such that the restriction to each geometric fiber has degree $d$.
+		\item $\nabla: \Fc \to \Fc \otimes \omega_{C_S / S}(D_S)$ is a flat $t$-connection.
+	\end{enumerate}
+	Taking GIT quotients, we obtain a moduli space $(\MHodge)_{C_B} \to \AA^1_B$.
+\end{dfn}
+
+\subsection{Smoothness}
+
+Our goal in the remaining time is to show $(\MHodge)_{C_B} \to \AA^1_B$ is smooth.
+We proceed in a few steps:
+\begin{enumerate}
+	\item The map $(\MHodgefr)_{C_B} \to (\MHodge)_{C_B}$ is a smooth surjection, in fact a smooth good moduli space in the sense of Alper.
+		This allows us to reduce to checking that $(\MHodgefr)_{C_B} \to \AA^1_B$ is smooth.
+		This is where the coprimality hypothesis arises.
+	\item Then we develop an obstruction theory for $t$-connections, i.e.\ an obstruction module $\Qc_x$ for every $x: \Spec A \to (\MHodgefr)_{C_B}$ which is compatible with base change.
+		This module controls lifts along square-zero extensions.
+	\item This allows us to reduce to showing that $\Qc_x$ vanishes for every geometric point $x: \Spec k \to (\MHodgefr)_{C_B}$.
+	\item Given such a geometric point $x$, we extend this to a family $\AA^1_k \to (\MHodgefr)_{C_B}$ which is compatible with the rescaling of $t$-connections and is such that $x$ corresponds to $1 \in \AA^1_k$.
+	\item Degenerating our $t$-connection along this family allows us to reduce to showing that $\Qc_x = 0$ for geometric points $x$ corresponding to Higgs bundles.
+	\item In this case, we can check that the desired result holds -- this part really requires the existence of poles / a divisor $D$.
+\end{enumerate}
 
 \end{document}

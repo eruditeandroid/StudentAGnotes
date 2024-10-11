@@ -604,7 +604,139 @@ We proceed in a few steps:
 	\item This allows us to reduce to showing that $\Qc_x$ vanishes for every geometric point $x: \Spec k \to (\MHodgefr)_{C_B}$.
 	\item Given such a geometric point $x$, we extend this to a family $\AA^1_k \to (\MHodgefr)_{C_B}$ which is compatible with the rescaling of $t$-connections and is such that $x$ corresponds to $1 \in \AA^1_k$.
 	\item Degenerating our $t$-connection along this family allows us to reduce to showing that $\Qc_x = 0$ for geometric points $x$ corresponding to Higgs bundles.
-	\item In this case, we can check that the desired result holds -- this part really requires the existence of poles / a divisor $D$.
+	\item In this case, we can check that the desired result holds -- this part really requires the existence of poles / the use of a divisor $D$ with the stated properties.
 \end{enumerate}
+
+\section{10/11 (Noah Olander) -- Root Stacks and Tame Ramification}
+
+The goal of this talk is to discuss a partial generalization of a theorem of Grothendieck on fundamental groups.
+
+\subsection{A theorem of Grothendieck}
+
+Let $X$ be a scheme, $\Et(X)$ the category of schemes which are \'etale over $X$, and $\FEt(X)$ the category of schemes which are finite \'etale over $X$.
+If $(R, \mfr)$ is a local ring and $X$ is an $R$-scheme, we will write $X_n = X \times_{\Spec R} \Spec(R / \mfr^{n+1})$.
+
+\begin{thm}
+	Let $R$ be a complete noetherian local ring.
+	Suppose $X$ is proper over $R$.
+	Then the pullback map $\FEt(X) \to \FEt(X_0)$ is an equivalence.
+\end{thm}
+
+As a consequence, if $X$ and $X_0$ are connected and $\ol{x}: \Spec \ol{k}  \to X_0$ is a geometric point, then $\pi_1(X_0, \ol{x}) = \pi_1(X_0, \ol{x})$.
+We'll try to generalize this statement, but first we'll talk about the proof.
+
+\begin{proof}
+	There are two main ingredients:
+	\begin{enumerate}
+		\item \emph{Grothendieck's existence theorem}: in the situation above, the natural map $\Coh(X) \to \lim_n \Coh(X_n)$ is an equivalence.
+			Here $\lim_n \Coh(X_n)$ is the category of systems $(\Fc_n \in \Coh(X_n), \alpha_n: \Fc_{n+1} \xrightarrow{\sim} \Fc_n)$.
+			This really requires completeness of $R$ and properness of $X$.
+		\item If $i: Z \hookrightarrow X$ is a closed immersion with $\Ic_Z^2 = 0$, then $\Et(X) \to \Et(Z)$ is an equivalence.
+			One can see that this functor is fully faithful by the formal criterion for \'etaleness.
+			Once we know the functor is fully faithful, the question of essential surjectivity reduces to a local question, and we can do this explicitly by lifting presentations.
+	\end{enumerate}
+	Given these, we obtain $\FEt(X) \xrightarrow{\sim} \lim_n \FEt(X_n) \xrightarrow{\sim} \FEt(X_0)$.
+\end{proof}
+
+The theorem and its proof generalize easily to algebraic stacks which are proper over $R$.
+We'd like find a partial generalization to the non-proper case.
+
+\subsection{Root stacks}
+
+Our generalization will involve root stacks.
+
+Let's consider the local situation first: let $X$ be a scheme, $f \in \Oc(X)$.
+Suppose $r \in \ZZ_{\geq 1}$ is invertible in $\Oc(X)$.
+Write $X_r = \ul{\Spec} (\Oc_X[t] / (t^r - f))$.
+If $T$ is a scheme over $X$, then
+\[
+	X_r(t) = \{ g \in \Oc(T) \,|\, g^r = f \}
+\]
+has an action of $\mu_r(T)$ via $a \cdot g = ag \in \Oc(T)$.
+The \emph{root stack} is $\Xfr_r = [X_r / \mu_r]$.
+
+Globally, let $\Lc \in \Pic(X)$ and $s \in \Gamma(X, \Lc)$.
+Continue to assume $r$ is invertible in $\Oc(X)$.
+We define a \emph{root stack} $\Xfr_r$ over $X$ with $T$-points (for $f: T \to X$) given by
+\[
+	\Xfr_r(T) = \big\{ \big(\Mc \in \Pic(T), \alpha: f^* \Lc \xrightarrow{\sim} \Mc^{\otimes r}, t \in \Gamma(T, \Mc)\big) \,\big|\, \alpha(f^* s) = t^r\big\}
+\]
+If $\Lc$ is trivial, then this agrees with the local construction above.
+In particular, it follows that $\Xfr_r$ is algebraic.
+
+Note that $\Xfr_r$ has a tautological line bundles $\Mc$ and section $t$ such that (writing $p: \Xfr_r \to X$ for the structure morphism) we have $\Mc^{\otimes r} \cong p^* \Lc$ and $t^r = s$.
+
+\begin{ex}
+	Let $X = \AA^1_\CC = \Spec \CC[x]$, and let $f = x$.
+	Then $X_2 = \Spec k[x, t] / (t^2 - x)$, and $\Xfr_2 = [X_2 / \mu_2]$ looks like $\AA^1_\CC$ with a copy of $B\mu_2$ at the origin.
+\end{ex}
+
+\begin{lem}
+	Let $D = V(s)$.
+	\begin{enumerate}
+		\item If $r \in \Oc(X)^\times$, then $\Xfr_r$ is a Deligne-Mumford stack.
+		\item Let $U = X \setminus D$.
+			Then $\Xfr_r \to X$ is an isomorphism over $U$.
+		\item Let $\Dfr_r = V(t)$.
+			Then $\Dfr_r$ is a $\mu_r$-gerbe over $D$.
+		\item If $s: \Oc_X \hookrightarrow \Lc$, then $t: \Oc_{\Xfr_r} \hookrightarrow \Mc$.
+		\item If $s: \Oc_X \hookrightarrow \Lc$ and $X$ and $D$ are regular noetherian schemes, then $\Xfr_r$ and $\Dfr_r$ are regular.
+	\end{enumerate}
+\end{lem}
+
+\begin{proof}
+	Everything is local, so we reduce to the case $\Lc = \Oc_X$.
+	\begin{enumerate}
+		\item The map $X_r \to \Xfr_r$ is an \'etale cover by a scheme.
+		\item The map $U \times_X X_r \to U$ is a $\mu_r$-torsor.
+			Now observe that, if $R$ is a ring and $a \in R^\times$, then $\mu_r(R)$ acts simply transitively on the set of roots $\{t \,|\, t^r = a\}$.
+		\item This follows from a local computation together with the fact that $D$ has trivial $\mu_r$ action.
+		\item Left as an exercise.
+		\item Left as an exercise. \qedhere
+	\end{enumerate}
+\end{proof}
+
+\subsection{Tame ramification}
+
+Let $A$ be a DVR and $K = \Frac(A)$.
+Let $L / K$ be a finite separable extension, and let $B$ be the integral closure of $A$ in $L$.
+Let $\mfr_1, \dots, \mfr_s$ denote the maximal ideals of $B$, and let $e_i$ be the ramification index of $A \to B_{\mfr_i}$ (i.e.\ the integers such that $\pi_A \mapsto u \pi_B^{e_i}$ where $u \in B^\times$).
+
+\begin{dfn}
+	The extension $L / K$ is:
+	\begin{enumerate}
+		\item \emph{unramified} with respect to $A$ if $e_i = 1$ for all $i$.
+		\item \emph{tamely ramified} with respect to $A$ if $e_i \in A^\times$ for all $i$.
+			(Equivalently, $\charop A / \mfr_A$ does not divide $e_i$ for any $i$.)
+	\end{enumerate}
+\end{dfn}
+
+\begin{lem}[Abhyankar]
+	If $L / K$ is tamely ramified with respect to $A$, $\pi \in A$ is a uniformizer, and $r \in \ZZ$ is such that $e_i | r$ for all $i$ and $r \in A^\times$, then $L[\pi^{1/r}] / K[\pi^{1/r}]$ is unramified with respect to $A[T] / (T^r - \pi)$.
+\end{lem}
+
+Let $X$ be an integral regular noetherian scheme.
+Let $D$ be an effective divisor on $X$ with generic points $\eta_1, \dots, \eta_m$.
+Write $U = X \setminus D$.
+Let $f: Y \to U$ be finite \'etale with $Y$ integral, and write $L / K$ for the corresponding extension of function fields.
+
+\begin{dfn}
+	In the above setup, we say $f$ is \emph{unramified} (resp.\ \emph{tamely ramified}) along $D$ if $K / L$ is so with respect to $\Oc_{X,\eta_i}$ for all $i$.
+\end{dfn}
+
+\begin{prop}[Generalized Abhyankar's Lemma]
+	Let $X$ be a regular scheme over a field $k$, and let $D \subset X$ be a regular divisor.
+	Let $f: Y \to X$ be tamely ramified along $D$.
+	Then there exists $n \in \ZZ_{\geq 1}$ invertible in $k$ such that $f$ extends to a finite \'etale morphism $\Yfr \to \Xfr_r$ (where $Y \subset \Yfr$ is a dense open).
+\end{prop}
+
+We're out of time, but we can at least state the theorem we've been building up to.
+
+\begin{thm}
+	Let $R$ be a regular noetherian complete local ring.
+	Let $X / R$ be smooth and proper, and let $D \subset X$ be a smooth effective Cartier divisor.
+	Let $U = X \setminus D$.
+	Then any finite \'etale morphism $Y_0 \to U_0$ which is tamely ramified along $D_0$ extends to a finite \'etale morphism $Y \to U$ which is tamely ramified along $D$.
+\end{thm}
 
 \end{document}

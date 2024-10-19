@@ -739,4 +739,138 @@ We're out of time, but we can at least state the theorem we've been building up 
 	Then any finite \'etale morphism $Y_0 \to U_0$ which is tamely ramified along $D_0$ extends to a finite \'etale morphism $Y \to U$ which is tamely ramified along $D$.
 \end{thm}
 
+\section{10/18 (Daigo Ito) -- Good Moduli Spaces of Objects in Abelian Categories}
+
+Throughout we let $k = \ol{k}$, $\charop k = 0$.
+(Most results about abelian categories here work over any commutative ring.
+Some need excellence and $\charop k = 0$.)
+We're following a paper by Alper on the existence of good moduli spaces.
+
+\subsection{Background on semistability}
+
+Let $X$ be a projective variety over $k$.
+Can we construct a nice moduli space of coherent sheaves on $X$?
+The answer is \emph{yes} if we restrict to a nice enough class of sheaves (e.g.\ \emph{semistable} sheaves).
+Can we understand this more generally?
+
+\begin{dfn}
+	Fix an ample line bundle $\Oc(1)$ on $X$ and a ``numerical $K$-class'' $v \in K^{\mathrm{num}}(X) := K(X) / \equiv^\chi$, where $\Fc \equiv^\chi 0$ if $\chi(\Fc, \Gc) = 0$ for all $\Gc$.
+	Here
+	\[
+		\chi(\Fc, \Gc) = \sum_i (-1)^i \dim \Ext^i(\Fc, \Gc).
+	\]
+	Define the moduli problem $\Mc_v(\Oc(1)): \Sch\op \to \Set$ by letting $\Mc_v(\Oc(1))(T)$ consist of $T$-flat coherent sheaves on $X \times T$ such that, for all $t$, the sheaves $\Fc_t$ are semistable (w/r/t $\Oc(1)$) and $\ch(\Fc_t) = v$, where $\ch$ is the numerical Chern character.
+\end{dfn}
+
+The following can be found in Huybrechts and Lehn:
+
+\begin{thm}
+	The moduli problem $\Mc_v(\Oc(1))$ admits a coarse moduli space $M_v(\Oc(1))$ which is a projective variety.
+\end{thm}
+
+\begin{proof}[Idea of proof]
+	One shows that there exists $m > 0$ such that, for all semistable sheaves $\Fc$ with $\ch(\Fc) = v$, there exists a vector space $V$ and a surjection $\Oc(-m) \otimes V \twoheadrightarrow \Fc$.
+	(Specifically, we can take $\dim V = \chi(\Fc(m))$.)
+	Let $R$ be the open subscheme of semistable quotients in $\Quot(\Oc(-m) \otimes V, v)$.
+	We take $M_v(\Oc(1)) = R \sslash \PGL(v)$.
+	To conclude, we use the fact that Gieseker semistability agrees with GIT semistability.
+\end{proof}
+
+\subsection{Background on good moduli spaces}
+
+\begin{dfn}
+	A qcqs morphism $\pi: \Xfr \to X$, where $\Xfr$ is an algebraic stack and $X$ is an algebraic space, is a \emph{good moduli space} if:
+	\begin{enumerate}
+		\item The pushforward $\pi_*: \QCoh(\Xfr) \to \QCoh(X)$ is exact, and
+		\item The natural map $\Oc_X \to \pi_* \Oc_{\Xfr}$ is an isomorphism.
+	\end{enumerate}
+\end{dfn}
+
+\begin{ex}
+	Let $G$ be a reductive group scheme acting linearly on a projective scheme $X$.
+	Then the GIT quotient map $[X^{ss} / G] \to X^{ss} \sslash G$ is a good moduli space.
+\end{ex}
+
+\subsection{Moduli stacks of objects of abelian categories}
+
+Let $\Ac$ be a $k$-linear Grothendieck abelian category, e.g.\ $\Ac = \QCoh(X)$ or $\Ac = \Indsf(\Bc)$ for some small abelian category $\Bc$.
+We'd like to construct a moduli stack $\Mc_\Ac$ of nice objects of $\Ac$.
+
+\begin{dfn}
+	An object $E \in \Ac$ is
+	\begin{enumerate}
+		\item \emph{finitely presented} (or \emph{compact}) if $\Hom_\Ac(E, -)$ commutes with arbitrary filtered colimits.
+		\item \emph{noetherian} if every ascending chain of subobjects terminates.
+	\end{enumerate}
+	We say $\Ac$ is \emph{locally noetherian} if $\Ac$ has a generating set of noetherian objects.
+\end{dfn}
+
+\begin{ex}
+	For $\Ac = R\dMod$, these agree with the usual notions.
+\end{ex}
+
+\begin{ex}
+	If $X$ is a noetherian scheme, then $\QCoh(X)$ is locally noetherian.
+\end{ex}
+
+We will assume from now on that $\Ac$ is locally noetherian.
+This implies that noetherian objects and compact objects agree in $\Ac$.
+
+\begin{dfn}
+	Let $R$ be a (commutative) $k$-algebra.
+	We define $\Ac_R$ as the category of $R$-module objects in $\Ac$ (so objects of $\Ac_R$ are pairs $(E \in \Ac, \xi_E: R \to \End_\Ac(E))$).
+\end{dfn}
+
+Even if $\Ac$ is noetherian, $\Ac_R$ need not be locally noetherian.
+This will hold if $R$ is of finite type, though.
+We will generally avoid this issue.
+
+For a morphism of (commutative) $k$-algebras $f: S \to T$, there is a forgetful functor $f_*: \Ac_T \to \Ac_S$ which is faithful, faithfully exact, and commutes with filtered colimits.
+This functor admits a left adjoint $f^* = T \otimes_S (-)$.
+
+For $E \in \Ac_R$, we also have a functor $(-) \otimes_R E: \Ac_R \to \Ac_R$.
+We say $E$ is \emph{$R$-flat} if $(-) \otimes_R E$ is exact.
+
+\begin{dfn}
+	Let $\Ac$ be a locally noetherian category.
+	We define the pseudofunctor $\Mc_\Ac: \CAlg_k \to \Grpd$ by letting $\Mc_\Ac(R)$ be the groupoid of $R$-flat and finitely presented $E \in \Ac_R$.
+	This sends a morphism $f$ to $f^*$, which is well-defined in a suitable sense.
+\end{dfn}
+
+\begin{thm}
+	The pseudofunctor $\Mc_\Ac$ is a stack for the fppf topology, hence naturally extends to a fppf stack on $\Sch_k$.
+\end{thm}
+
+\subsection{Gieseker stability and Bridgeland stability}
+
+Let $\Ac = \QCoh(X)$ for a projective $k$-scheme $X$.
+
+\begin{thm}[Lieblich]
+	The moduli stack $\Dc^b_{\mathrm{pug}}(X)$ of universally gluable relatively perfect complexes on $X$ is an algebraic stack, locally of finite type.
+\end{thm}
+
+Here ``universally gluable'' denotes vanishing of negative self-$\Ext$ groups.
+
+\begin{thm}[Halpern-Leistner]
+	Let $\Cc$ be the heart of a ``nice'' $t$-structure on $\Dbcoh(X)$.
+	Then $\Mc_{\Indsf(\Cc)}$ is an open substack of $\Dc^b_{\mathrm{pug}}(X)$.
+\end{thm}
+
+\begin{ex}
+	The standard $t$-structure on $\Dbcoh(X)$ has $\Coh(X)$ as its heart.
+	We have $\QCoh(X) = \Indsf \Coh(X)$ as abelian categories.
+	It follows that $\Mc_{\QCoh(X)}$ embeds as an open substack of $\Dc^b_{\mathrm{pug}}(X)$.
+\end{ex}
+
+\begin{thm}
+	Let $\Ac$ be locally noetherian.
+	Choose a locally constant function $p_v: \abs{\Mc_{\Ac}} \to \pi_0(\Mc_{\Ac}) \to V$ (where $V$ is a totally ordered abelian group) satisfying $p_v(\Ec) = 0$ for all $\Ec \in v$ and $p_v(\Ec \oplus \Fc) = p_v(\Ec) + p_v(\Fc)$.
+	Say that a $k$-point $\Ec \in \Mc_{\Ac}(k)$ is \emph{semistable} if, for all $\Fc \subset \Ec$, $p_v(\Fc) \leq 0$.
+	Then the substack of semistable objects $\Mc_{\Ac}^{ss,v} \subset \Mc_{\Ac}$ admits a separated good moduli space.
+	Furthermore, if $\Mc_{\Ac}^{ss}$ agrees with the semistable locus in the sense of $\Theta$-stratifications, then it admits a proper good moduli space.
+\end{thm}
+
+The first semistability condition here generalizes Gieseker semistability.
+The second semistability condition here generalizes GIT semistability.
+Thus we can recover the original construction of moduli of semistable sheaves from this theorem.
 \end{document}

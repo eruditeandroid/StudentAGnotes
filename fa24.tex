@@ -1090,4 +1090,143 @@ It is natural to ask: when does $\Xfr$ admit a $\det$-ample vector bundle?
 
 We can describe the construction of $\QP(V)$ in some examples, but I didn't really follow them.
 
+\section{11/8 (Drew Keisling) -- Projectivity of the Moduli Space of Vector Bundles on a Curve}
+
+This is based on a paper of the same title of Alper, Belmans, Bragg, Liang, and Tajakka.
+Fix $k = \ol{k}$, $\charop k = 0$.
+Let $X$ be a smooth complete curve over $k$ of genus $g \geq 2$.
+
+\subsection{The moduli space of semistable vector bundles}
+
+\begin{dfn}
+	Fix a rank $r \in \ZZ_{>0}$ and a degree $d \in \ZZ$.
+	We define a functor $\Mfr_X(r, d): \Sch_k \to \Grpd$ sending a $k$-scheme $T$ to the groupoid of rank $r$, degree $d$ vector bundles $\Ec$ on $T \times X$ which are flat over $T$.
+\end{dfn}
+
+Here the \emph{degree} of a rank $r$ vector bundle $\Ec$ on $X$ is the degree of $\det \Ec = \wedge^r \Ec$ as a line bundle.
+
+\begin{rmk}
+	Flatness here ensures that things behave nicely in families.
+	It may hold automatically.
+\end{rmk}
+
+We'll focus on a particularly nice class of vector bundles.
+
+\begin{dfn}
+	Let $\Ec$ be a vector bundle on $X$.
+	The \emph{slope} of $\Ec$ is 
+	\[
+		\mu(\Ec) = \frac{\deg(\Ec)}{\rk(\Ec)}.
+	\]
+	We say that $\Ec$ is:
+	\begin{enumerate}
+		\item \emph{stable} if, for all subbundles $\Ec' \subset \Ec$, we have $\mu(\Ec') < \mu(\Ec)$.
+		\item \emph{polystable} if $\Ec = \oplus_i \Ec_i$ where, for all $i$, $\mu(\Ec_i) = \mu(\Ec)$ and $\Ec_i$ is stable.
+		\item \emph{semistable} if, for all subbundles $\Ec' \subset \Ec$, we have $\mu(\Ec') \leq \mu(\Ec)$.
+	\end{enumerate}
+\end{dfn}
+
+Stability implies polystability, and polystability implies semistability.
+
+\begin{prop}
+	If $\Ec$ is a semistable vector bundle, then there is a (suitably unique) Jordan-H\"older filtration
+	\[
+		0 = \Ec_0 \subset \Ec_1 \subset \dots \subset \Ec_k = \Ec
+	\]
+	such that $\Ec_i / \Ec_{i-1}$ is stable with slope $\mu(\Ec)$.
+	The \emph{associated graded polystable bundle} of $\Ec$ is $\oplus_i \Ec_i / \Ec_{i-1}$
+\end{prop}
+
+We will restrict to the open subfunctor $\Mfr_X^\ssrm(r, d) \subset \Mfr_X(r, d)$.
+
+\begin{thm}
+	The stack $\Mfr_X^\ssrm(r, d)$ has the following properties:
+	\begin{enumerate}
+		\item $\Mfr_X^\ssrm(r, d)$ is an algebraic stack of finite type over $k$ with affine diagonal.
+			It is smooth and irreducible.
+		\item There exists a good moduli space $\pi: \Mfr_X^\ssrm(r, d) \to M_X^\ssrm(r, d)$ with $M_X^\ssrm(r, d)$ an irreducible proper algebraic space over $k$ of dimension $r^2 (g - 1) + 1$.
+			This represents equivalence classes of vector bundles on $X$, where $\Ec \sim \Ec'$ if $\gr(\Ec) \cong \gr(\Ec')$.
+	\end{enumerate}
+\end{thm}
+
+\begin{rmk}
+	This good moduli space can be constructed classically using GIT.
+	However, the approach of the paper mentioned uses the valuative criteria discussed earlier in the semester.
+	Note that $\Mfr_X^\ssrm(r, d)$ is an Artin stack, so the Keel-Mori theorem doesn't apply.
+\end{rmk}
+
+Our goal in this talk is to understand the following theorem.
+
+\begin{thm}
+	$M_X^\ssrm(r, d)$ is a projective variety.
+\end{thm}
+
+\subsection{Determinantal line bundles}
+
+To prove the theorem, we need to find some ample line bundles.
+We start by considering a more general situation.
+Let $\Sfr$ be a stack over $k$, and let $X$ be our curve.
+Write $p: X \times \Sfr \to \Sfr$ and $q: X \times \Sfr \to X$ for the projections.
+
+Let $\Ec$ be a vector bundle on $X \times \Sfr$ flat over $\Sfr$.
+We can choose a two-step resolution
+\[
+	\SES{\Ec^{-1}}{\Ec^0}{\Ec}
+\]
+such that, if $\Kc^0 = \Rbf^1 p_* \Ec^{-1}$ and $\Kc^1 = \Rbf^1 p_* \Ec^0$, then $\Kc^0$ and $\Kc^1$ are vector bundles on $\Sfr$ and $\Rbf p_* \Ec \simeq [\Kc^0 \to \Kc^1]$.
+We can define the \emph{determinant} $\det(\Rbf p_* \Ec) := \det \Kc^0 \otimes (\det \Kc^1)^\vee$.
+
+\begin{prop}
+	The determinant $\det(\Rbf p_* \Ec)$ is well-defined.
+\end{prop}
+
+If $\rk \Kc^0 = \rk \Kc^1$ (equivalently $\rk \Rbf p_* \Ec = 0$), then $\Kc^0 \to \Kc^1$ induces a global section of $\det (\Rbf p_* \Ec)^\vee$.
+
+Let's specialize to the case of $\Sfr = \Mfr_X^\ssrm(r, d)$.
+
+\begin{dfn}
+	The \emph{universal vector bundle} $\Ec_\univ$ on $X \times \Mfr_X^\ssrm(r, d)$ has fiber over $[\Ec] \in \Mfr_X^\ssrm(r, d)$ given by $\Ec$ itself.
+\end{dfn}
+
+\begin{dfn}
+	Let $\Vc$ be a vector bundle on $X$.
+	The corresponding \emph{determinantal line bundle} on $\Mfr_X^\ssrm(r, d)$ is $\Lc_\Vc = (\det \Rbf p_*(q^* \Vc \otimes \Ec_\univ))^\vee$.
+\end{dfn}
+
+\begin{prop}
+	The assignment $\Vc \mapsto \Lc_\Vc$ defines a group homomorphism
+	\[
+		K_0(X) \to \Pic(\Mfr_X^\ssrm(r, d)).
+	\]
+	In particular, the isomorphism class of $\Lc_\Vc$ depends only on $\rk \Vc$ and $\deg \Vc$ (though the global sections induced by the above construction will depend on $\Vc$).
+\end{prop}
+
+\subsection{Proof of projectivity}
+
+We proceed in several steps:
+
+\begin{enumerate}
+	\item If $\chi(X, \Vc \otimes \Ec) = 0$ for all $[\Ec] \in \Mfr_X^\ssrm(r, d)$, then $\rk (\Rbf p_* (q^* \Vc \otimes \Ec_\univ)) = 0$.
+		(This can be proved using cohomology and base change.)
+		Let $s_\Vc$ be the corresponding global section of $\Lc_\Vc$.
+		For $m \geq 1$, we have $\chi(X, \Vc \otimes \Ec) = 0$ for $\Vc$ satisfying
+		\begin{align*}
+			\rk \Vc &= \frac{m r}{\gcd(r, d)} \\
+			\deg \Vc &= \rk(\Vc) (g - 1) - m \frac{d}{\gcd(r, d)}.
+		\end{align*}
+	\item The line bundle $\Lc_\Vc$ is the pullback $\pi^* L_\Vc$ of a unique line bundle $L_\Vc \in \Pic M_X^\ssrm(r, d)$.
+		To see this, one shows that the automorphisms act trivially on all fibers of $\Lc_\Vc$ over every closed point $[\Ec] \in \Mfr_X^\ssrm(r, d)$.
+		The closed points correspond to polystable vector bundles, and the Euler characteristic condition mentioned above ensures that the automorphisms act trivially.
+	\item Fix $[\Ec] \in M_X^\ssrm(r, d)$.
+		Then one can show that $H^0(X, \Vc \otimes \Ec) = 0$ if and only if $s_\Vc([\Ec]) \neq 0$.
+	\item For a fixed $\Ec$ and a general $\Vc$ as in step (1) with $m \gg 0$, one can show that $H^0(X, \Vc \otimes \Ec) = 0$.
+		Thus $L_\Vc$ is generated by global sections.
+	\item If $\Ec$ and $\Ec'$ are polystable vector bundles and $\Ec$ has a summand not in $\Ec'$, then there exists $\Vc$ for all $m \gg 0$ such that $H^0(X, \Vc \otimes \Ec) = 0$ and $H^0(X, \Vc \otimes \Ec') \neq 0$.
+	\item By (3) and (4), we obtain a map $\phi: M_X^\ssrm(r, d) \to \PP_k^N$ with $\phi^* \Oc(1) \cong L_\Vc$.
+		Furthermore, by (3) and (5), $\phi$ is quasifinite.
+		In particular, because $\phi$ is proper, $\phi$ must also be finite.
+		In particular, $\phi$ is affine, so $M_X^\ssrm(r, d)$ is a scheme.
+		Furthermore, because $\phi$ is finite, $L_V$ must be ample.
+\end{enumerate}
+
 \end{document}

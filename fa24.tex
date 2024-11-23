@@ -1229,4 +1229,110 @@ We proceed in several steps:
 		Furthermore, because $\phi$ is finite, $L_V$ must be ample.
 \end{enumerate}
 
+\section{11/22 (Joe Stahl) -- Logarithmic Resolution via Multiweighted Blowups}
+
+This talk is based on a paper of the same name by Abramovich and Quek.
+The goal is to improve Hironaka's resolution of singularities.
+We work throughout over a field $k$ of characteristic zero.
+
+The main theorem is:
+
+\begin{thm}
+	Let $\Yfr$ be a smooth toroidal artin stack over $k$ and $\Xfr \subset \Yfr$ a reduced, generically toroidal, closed substack.
+	There exists a canonical sequence of multiweighted blowups
+	\[
+		\Pi: \Yfr_N \xrightarrow{\pi_N} \Yfr_{N-1} \xrightarrow{\pi_{N-1}} \dots \xrightarrow{\pi_2} \Yfr_1 \xrightarrow{\pi_1} \Yfr_0 = \Yfr
+	\]
+	with proper transforms $\Xfr_i \subset \Yfr_i$ of $\Xfr$ such that:
+	\begin{enumerate}[label=(\roman*)]
+		\item $\Xfr_N$ is a smooth toroidal Artin stack over $k$,
+		\item $\Pi$ is an isomorphism over the log-smooth locus $\Xfr^{\mathrm{logsm}} \subset \Xfr$,
+		\item $\Pi\inv(\Xfr \setminus \Xfr^{\mathrm{logsm}})$ is a smooth normal crossings divisor on $\Xfr_N$,
+		\item Each $\pi_i$ is birational, surjective, universally closed, and factors as $\Yfr_i \to Y_i \to \Yfr_{i-1}$, where $\Yfr_i \to Y_i$ is a good moduli space for $\Yfr_i$ relative to $\Yfr_{i-1}$, $Y_i$ is normal, and $Y_i \to \Yfr_{i-1}$ is a schematic blowup (hence birational and projective).
+	\end{enumerate}
+	Moreover, the association $(\Xfr \subset \Yfr) \mapsto (\Xfr_N \subset \Yfr_N)$ is functorial.
+\end{thm}
+
+The rough idea here is to iteratively blow up $\Yfr_i$ along the worst singular locus of $\Xfr_i$.
+
+\subsection{Multiweighted blowups}
+
+Why do we consider ``multiweighted blowups'' here?
+
+\begin{ex}
+	Consider the Whitney umbrella $X = V(x^2 - y^2 z) \subset Y = \AA^3$.
+	This is singular along the $z$-axis, but the origin is the ``worst'' singularity.
+	Blowing up along this ``worst'' singularity doesn't help: the blowup has the same type of singularity!
+	More precisely, if we let $\pi: \Bl_0(Y) \to Y$ and look at $\pi\inv(X \setminus 0)$ in the $v \neq 0$ chart (where $[t : u : v]$ are coordinates on $\PP^2$), we have $x = zt$ and $y = zu$ and therefore
+	\[
+		x^2 - y^2 z = z^2 (t^2 - u^2 z)
+	\]
+	The $z^2$ factor corresponds to the exceptional divisor.
+	The strict transform therefore looks like $t^2 - u^2 z$, which is basically the same type of singularity.
+\end{ex}
+
+One way to fix this is to do a ``stacky'' / ``weighted'' blowup at the origin instead of using the standard scheme-theoretic blowup.
+(There are other methods too, e.g.\ blowing up the entire $z$-axis instead of just the origin.)
+
+\subsection{Measuring singularities}
+
+For the proof, we need an invariant which measures the singularities of $\Xfr$ in $\Yfr$.
+We can actually reduce to the case of schemes $X$ and $Y$.
+
+For $p \in Y$, we let $\invop_p(X \subset Y) = \invop_p(I)$ (where $I$ is the ideal defining $X$) be a certain finite nondecreasing sequence of rational numbers (possibly empty or ending in $\infty$).
+This has the properties:
+\begin{enumerate}
+	\item The values of $\invop$ are well-ordered lexicographically.
+	\item If $X = Y$, then $\invop_p(X \subset Y)$ is empty.
+	\item $\invop_p(X \subset Y) = (0)$ if and only if $p \not\in X$.
+	\item For $p \in X$, $\invop_p(X \subset Y) \geq (1, \dots, 1)$ ($c$ copies), with equality if and only if $X$ is smooth and toroidal at $p$.
+	\item The first entry of $\invop_p(X \subset Y)$ is the ``log order'' of $I$ at $p$.
+	\item $\invop$ is upper semicontinuous on $Y$.
+\end{enumerate}
+
+This allows us to prove the following, which is the technical heart of the approach.
+
+\begin{thm}
+	Let $\Xfr \subset \Yfr$ be as in our original theorem, with $\Xfr$ necessarily singular.
+	There exists a multiweighted blowup $\pi: \Yfr' \to \Yfr$ with proper transform $\Xfr' \subset \Yfr'$ of $\Xfr$ such that:
+	\begin{enumerate}[label=(\roman*)]
+		\item $\Yfr'$ is a smooth (strict) toroidal Artin stack over $k$,
+		\item $\max \invop (\Xfr' \subset \Yfr') < \max \invop (\Xfr \subset \Yfr)$
+		\item $\pi$ is an isomorphism away from $\{ q \in Y \,|\, \invop_q(\Xfr \subset \Yfr) = \max \invop(\Xfr \subset \Yfr) \}$ (i.e.\ we are only blowing up the most singular points).
+	\end{enumerate}
+\end{thm}
+
+\subsection{Multiweighted blowups by example}
+
+\begin{ex}
+	Let $I = (x^2 + \ul{y}^2 \ul{z} + \ul{z}^3) \subset k[x, \ul{y}, \ul{z}]$, where the underlines indicate that we are considering the log structure with divisor $V(yz)$.
+	We let $X = V(I) \subset \AA^3 = Y$.
+	The algorithm of the last theorem tells us to blow up along $J = (x^2 , \ul{y}^2 \ul{z}, \ul{z}^3)$.
+	We draw the Newton polytope of $J$ (i.e.\ the upper convex hull of $(2, 0, 0)$, $(0, 2, 1)$, and $(0, 0, 3)$ in the first octant).
+	From this polytope we can construct a normal fan.
+	Letting $u_1 = (3, 2, 2)$ and $u_2 = (1, 0, 2)$ be some of the normal vectors, we define a morphism $\beta: \ZZ^5 \to \ZZ^3$ by
+	\[
+		e_i \mapsto \begin{cases}
+			e_i & 1 \leq i \leq 3 \\
+			u_{i-3} & i = 4, 5.
+		\end{cases}
+	\]
+	From this we get a short exact sequence
+	\[
+		\begin{tikzcd}
+			0 \rar & \ZZ^2 \rar["\alpha"] & \ZZ^5 \rar["\beta"] & \ZZ^3 \rar & 0.
+		\end{tikzcd}
+	\]
+	Then we lift the normal fan $\Sigma$ on $\ZZ^3$ to the normal fan $\hat{\Sigma}$ on $\ZZ^5$, where $\hat{\Sigma} = \{ \hat{\sigma} \,|\, \sigma \in \Sigma\}$ and $\hat{\sigma}$ is the cone spanned by $e_i \in \ZZ^5$ with $\beta(e_i) \in \sigma$.
+	
+	The multiweighted blowup of $\AA^3$ along $J$ is $\Bl_J \AA^3 = [X_{\hat{\Sigma}} / G_\beta]$, where $X_{\hat{\Sigma}}$ is the smooth toric variety associated to $\hat{\Sigma}$ and $G_\beta$ is the kernel of the induced map $\GG^5 \to \GG^3$.
+	(This is the local picture -- globally, multiweighted blowups need not be quotient stacks.)
+
+	In our case, the multiweighted blowup is
+	\[
+		[\big(\Spec k[x', \ul{y}', \ul{z}', u_1, u_2] \setminus V(\textrm{irrelevant ideal})\big) / \GG_m^2].
+	\]
+	The term ``multiweighted'' refers to the $\GG_m$ action having interesting weights (not just $1$).
+\end{ex}
+
 \end{document}
